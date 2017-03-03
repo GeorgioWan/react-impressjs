@@ -1,0 +1,285 @@
+/*** base style for impress ***/
+
+/************/
+/*** Font ***/
+/************/
+@import url(https://fonts.googleapis.com/css?family=Oxygen);
+$_font-family: 'Oxygen', georgia, '微軟正黑體', 'sans-serif';
+$_font-size: 48px;
+
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+body{
+  line-height: 1;
+  font-family: $_font-family;
+  min-height: 740px;
+  background: rgb(215, 215, 215);
+  background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 500, from(rgb(240, 240, 240)), to(rgb(155, 165, 175)));
+  background: -webkit-radial-gradient(rgb(240, 240, 240), rgb(155, 165, 175));
+  background:    -moz-radial-gradient(rgb(240, 240, 240), rgb(155, 165, 175));
+  background:     -ms-radial-gradient(rgb(240, 240, 240), rgb(155, 165, 175));
+  background:      -o-radial-gradient(rgb(240, 240, 240), rgb(155, 165, 175));
+  background:         radial-gradient(rgb(240, 240, 240), rgb(155, 165, 175));
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+  &:before, &:after{
+    content: '';
+    content: none;
+  }
+}
+
+
+
+/*
+    Now let's bring some text styles back ...
+*/
+b, strong { font-weight: bold }
+i, em { font-style: italic }
+sub, sup {
+  position: relative;
+}
+sub {bottom: -.25em;}
+sup {top: -.5em;}
+
+/*
+    ... and give links a nice look.
+*/
+.step{
+  a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    padding: 0 0.3em;
+    background: #3e4852;
+    border-radius: 0.2em;
+  
+    -webkit-transition: 0.5s;
+    -moz-transition:    0.5s;
+    -ms-transition:     0.5s;
+    -o-transition:      0.5s;
+    transition:         0.5s;
+    &:hover, &:focus {
+      color: rgba(255,255,255,0.9);
+      background: #54626f;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      text-decoration:none;
+    }
+  }
+}
+
+/*
+    step style
+*/
+.impress-enabled {
+  
+  .step {
+    margin: 0;
+    opacity: 0.3;
+
+    -webkit-transition: opacity 1s;
+    -moz-transition:    opacity 1s;
+    -ms-transition:     opacity 1s;
+    -o-transition:      opacity 1s;
+    transition:         opacity 1s;
+    
+    &.active{ 
+      opacity: 1; 
+      z-index: 9999;
+      cursor: default;
+    }
+  }
+}
+
+.step{
+  cursor: pointer;
+  position: relative;
+  width: 1000px;
+  height: 700px;
+  padding: 20px;
+  margin: 20px auto;
+
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing:    border-box;
+  -ms-box-sizing:     border-box;
+  -o-box-sizing:      border-box;
+  box-sizing:         border-box;
+
+  font-family: $_font-family;
+  font-size: $_font-size;
+  
+  /*****************/
+  /*** Font-Size ***/
+  /*****************/
+  h1, .h1{ font-size: ($_font-size * 2.6); }
+  h2, .h2{ font-size: ($_font-size * 2.15); }
+  h3, .h3{ font-size: ($_font-size * 1.7); }
+  h4, .h4{ font-size: ($_font-size * 1.3); }
+  h5, .h5{ font-size: ($_font-size * 1); }
+  h6, .h6{ font-size: ($_font-size * 0.85); }
+}
+
+/*
+    slide style
+*/
+.slide {
+  display: block;
+
+  line-height: 1.4;
+  width: 1000px;
+  height: 700px;
+  padding: 40px 60px;
+
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, .3);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+  color: rgb(102, 102, 102);
+  text-shadow: 0 2px 2px rgba(0, 0, 0, .1);
+
+  $_font-size: 35px;
+  font-size: $_font-size;
+  letter-spacing: -1px;
+  
+  h1, .h1{ font-size: ($_font-size * 2.6); }
+  h2, .h2{ font-size: ($_font-size * 2.15); }
+  h3, .h3{ font-size: ($_font-size * 1.7); }
+  h4, .h4{ font-size: ($_font-size * 1.3); }
+  h5, .h5{ font-size: ($_font-size * 1); }
+  h6, .h6{ font-size: ($_font-size * 0.85); }
+}
+
+/*
+    overview
+*/
+#overview {display: none;}
+.impress-on-overview .step {
+  opacity: 1;
+}
+/*
+    hint
+*/
+#oi-hint {
+  opacity: 0;
+  animation: fadeOutUp .6s ease forwards;
+
+  color: rgba(255,255,255,.8);
+  background-color: #3e4852;
+  font-size: 20px;
+  text-align: center;
+
+  width: 400px;
+  height: 100px;
+  line-height: 100px;
+
+  position: fixed;
+  left: 25px;
+  bottom: 14%;
+  z-index: 9999;
+
+  border-radius: 5px;
+  filter: drop-shadow(0 8px 8px rgba(0,0,0,.3));
+}
+#oi-hint b {
+  color: #e5b560;
+}
+.impress-on-start-1 #oi-hint{
+  animation: fadeInDown .6s ease 3s forwards;
+}
+/*
+    stamp
+*/
+#oi-stamp{
+  color: #3e4852;
+  font-size: 12px;
+  min-width: 166px;
+  position: fixed;
+  bottom: 5px;
+  left: 50%;
+  margin-left: -83px;
+  opacity: 0;
+  
+  animation: fadeOutUp .6s ease forwards;
+  
+  span { 
+    color: #d2482e;
+    font-size: 15px;
+    margin: 0 0.4em;
+  }
+  a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    padding: 0.15em 0.25em;
+    margin-left: 0.2em;
+    background: #3e4852;
+    border-radius: 0.2em;
+  
+    -webkit-transition: 0.5s;
+    -moz-transition:    0.5s;
+    -ms-transition:     0.5s;
+    -o-transition:      0.5s;
+    transition:         0.5s;
+    &:hover, &:focus {
+      color: rgba(255,255,255,0.9);
+      background: #54626f;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      text-decoration:none;
+    }
+  }
+  b { font-size: 13px;}
+}
+.impress-on-overview{
+  #oi-stamp{
+    animation: fadeInDown .6s ease 1.5s forwards;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fadeOutUp {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+}
