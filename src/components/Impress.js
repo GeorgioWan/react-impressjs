@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import update from 'react/lib/update';
-import { Step } from './';
 import { toNumber, computeWindowScale, css, pfx, perspective, 
          translate, rotate, scale, throttle, getElementFromHash } from '../api';
-         
-import '../styles/_base.scss';
 
 const body = document.body,
       ua = navigator.userAgent.toLowerCase();
@@ -258,24 +255,27 @@ export default class Impress extends Component {
         this.goto( next, next.duration );
     }
     
+    stepComponent( step, index ){
+        const { activeStep } = this.state;
+        
+        return React.cloneElement( step, {
+                    key: index,
+                    activeStep: activeStep,
+                    initStep: this.initStep.bind(this),
+                    goto: this.goto.bind(this)
+                }, step.props.children );
+    }
+    
     render() {
-        const { activeStep, rootStyles, canvasStyles } = this.state;
-        const steps = this.props.children || [ <Step><p>Oops! there is no Steps.</p></Step> ];
+        const { rootStyles, canvasStyles } = this.state;
+        const steps = React.Children.map( this.props.children, this.stepComponent.bind(this) );
         
         return (
             <div id="impress" style={ rootStyles }>
                 <div style={ canvasStyles }>
                     {
                         _impressSupported ?
-                        steps.map( (step, index) => 
-                            <Step {...step.props}
-                                  key={index}
-                                  activeStep={ activeStep }
-                                  initStep={this.initStep.bind(this)}
-                                  goto={this.goto.bind(this)}>
-                                {step.props.children}
-                            </Step>
-                        ) 
+                        steps
                         :
                         <h1>Sorry, your media or browser doesn't support this.</h1>
                     }

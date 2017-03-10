@@ -3,6 +3,8 @@ var paths = require('./paths');
 
 var publicPath = '/';
 
+process.env.NODE_ENV = 'development';
+
 module.exports = {
   entry: {
     Impress: paths.componentPath
