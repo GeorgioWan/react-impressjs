@@ -7,12 +7,12 @@ process.env.NODE_ENV = 'development';
 
 module.exports = {
   entry: {
-    Impress: paths.componentPath
+    index: paths.componentPath
   },
   output: {
-    path: paths.appBuild,
+    path: paths.appDist,
     pathinfo: true,
-    filename: 'static/js/[name].js',
+    filename: '[name].js',
     publicPath: publicPath
   },
   resolve: {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import update from 'react/lib/update';
 import { toNumber, computeWindowScale, css, pfx, perspective, 
-         translate, rotate, scale, throttle, getElementFromHash } from '../api';
+         translate, rotate, scale, throttle, getElementFromHash } from './util';
 
 const body = document.body,
       ua = navigator.userAgent.toLowerCase();
@@ -65,7 +65,8 @@ export default class Impress extends Component {
         }));
         
         // 2017/2/28 暫時想不到好方法
-        this.goto( _activeStep, 500 );
+        if ( !_impressSupported )
+            this.goto( _activeStep, 500 );
         
         document.addEventListener( "keyup", throttle((e) => {
             if ( e.keyCode === 9 ||
@@ -94,7 +95,8 @@ export default class Impress extends Component {
         }, 250), false );
         
         window.addEventListener( "resize", throttle(() => {
-            this.goto( this.state.activeStep, 500 );
+            if ( !_impressSupported )
+                this.goto( this.state.activeStep, 500 );
         }, 250), false );
         
         window.addEventListener( "hashchange", throttle(() => {
@@ -267,18 +269,24 @@ export default class Impress extends Component {
     }
     
     render() {
+        const { fallbackMessage } = this.props;
         const { rootStyles, canvasStyles } = this.state;
         const steps = React.Children.map( this.props.children, this.stepComponent.bind(this) );
         
         return (
             <div id="impress" style={ rootStyles }>
                 <div style={ canvasStyles }>
-                    {
-                        _impressSupported ?
-                        steps
-                        :
-                        <h1>Sorry, your media or browser doesn't support this.</h1>
-                    }
+                {
+                    _impressSupported ? steps :
+                    (
+                        <div className="fallback-message">
+                        {
+                            fallbackMessage ? fallbackMessage :
+                            <p>Your browser <b>doesn't support the features required</b> by React-impressJS, so you are presented with a simplified version of this presentation.</p>
+                        }
+                        </div>
+                    )
+                }
                 </div>
             </div>
         );

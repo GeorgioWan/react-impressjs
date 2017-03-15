@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import update from 'react/lib/update';
-import { toNumber, translate, rotate, scale } from '../api';
+import { toNumber, translate, rotate, scale } from './util';
 
 const defaultData = {
   x: 0,
