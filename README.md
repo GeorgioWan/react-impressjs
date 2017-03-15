@@ -3,7 +3,7 @@
 impress.js via React :tada:
 
 [![NPM version][npm-image]][npm-url]
-[![LICENCE][licence-image][licence-url]]
+[![LICENCE][licence-image]][licence-url]
 
 [npm-image]: https://img.shields.io/npm/v/react-impressjs.svg
 [npm-url]: https://www.npmjs.com/package/react-impressjs
@@ -12,20 +12,20 @@ impress.js via React :tada:
 
 ## Install
 
-[![NPM install]](https://nodei.co/npm/react-impressjs.png)(https://www.npmjs.com/package/react-impressjs)
+[![NPM install](https://nodei.co/npm/react-impressjs.png)](https://www.npmjs.com/package/react-impressjs)
 
 ## Usage
 
 ### Components
 
-**React-impressJS** have two components: `<Impress />` and `<Step />`, as same as [*impress.js*](https://github.com/impress/impress.js/).
-`<Impress />` contains the *root of impress* and the *camera*, then put `<Step />` inside impress component, magic happens :sparkles:
+**React-impressJS** have two components: **`<Impress />`** and **`<Step />`**, as same as [**impress.js**](https://github.com/impress/impress.js/).
+**`<Impress />`** contains the **root of impress** and the **camera**, then put **`<Step />`** inside impress component, magic happens :sparkles:
 
 > What's **impress.js**!? It's an awesome presentation framework power of CSS3 transorms and transitions, please check [THIS](https://github.com/impress/impress.js) first!!
 
 ### Basic Use
 
-```js
+```jsx
 import { Impress, Step } from 'react-impressjs';
 
 <Impress fallbackMessage={<p>Sorry, your <b>device or browser</b> couldn't support well.</p>}>
@@ -52,7 +52,7 @@ import { Impress, Step } from 'react-impressjs';
 
 | name     | type    | description     | default      |
 |----------|----------------|----------|--------------|
-|rootData | Object | setting impress basic config | *defaults* |
+|rootData | Object | setting impress basic config | **defaults** |
 |fallbackMessage | String or Element | fallback message is only visible when there is `impress-not-supported` | - |
 
 ```js
@@ -70,9 +70,9 @@ const defaults = {
 
 | name     | type    | description     | default      |
 |----------|----------------|----------|--------------|
-|id | String | id of dom node | 'step-' + timestamp |
+|id | String | id of dom node | "step-" + **timestamp** |
 |className | String | additional css class of step dom node | '' |
-|data | Object | setting Step's presentation | *defaultData* |
+|data | Object | setting Step's presentation | **defaultData** |
 |duration | number | define duration of the transition in ms  | 1000 |
 
 ```js
@@ -89,7 +89,7 @@ const defaultData = {
 
 ## Development
 
-This Component is still under development, if you have any suggestion, you could leave some in [issue](https://github.com/GeorgioWan/react-impressjs/issues) or fork this repo :muscle::muscle:
+This Component is still under development, if you have any suggestion, you could leave some in [**issue**](https://github.com/GeorgioWan/react-impressjs/issues) or [**fork this repo**](https://github.com/GeorgioWan/react-impressjs#fork-destination-box) :muscle::muscle:
 
 ## License
 
