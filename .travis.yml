@@ -1,0 +1,13 @@
+language: node_js
+
+sudo: false
+
+notifications:
+  email:
+  - georgio.wan@gmail.com
+
+node_js:
+  - 7
+
+before_install:
+  - npm install
