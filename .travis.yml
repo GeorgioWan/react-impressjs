@@ -7,7 +7,7 @@ notifications:
   - georgio.wan@gmail.com
 
 node_js:
-  - 7
+  - 4
 
 before_install:
   - npm install
