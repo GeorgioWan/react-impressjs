@@ -11,4 +11,5 @@ npm:
   - 4
 
 before_install:
-  - npm install
+  - npm install yarn -g
+  - yarn install
