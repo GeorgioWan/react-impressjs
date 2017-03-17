@@ -65,7 +65,7 @@ export default class Impress extends Component {
         }));
         
         // 2017/2/28 暫時想不到好方法
-        if ( !_impressSupported )
+        if ( _impressSupported )
             this.goto( _activeStep, 500 );
         
         document.addEventListener( "keyup", throttle((e) => {
@@ -95,7 +95,7 @@ export default class Impress extends Component {
         }, 250), false );
         
         window.addEventListener( "resize", throttle(() => {
-            if ( !_impressSupported )
+            if ( _impressSupported )
                 this.goto( this.state.activeStep, 500 );
         }, 250), false );
         

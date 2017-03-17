@@ -87,9 +87,19 @@ const defaultData = {
 };
 ```
 
+## Style
+
+Currently, you can use impress.js's style in your app:
+
+```js
+import 'react-impressjs/styles/impress-demo.css';
+```
+
+> If you have the better one, I'm glade you can share with us, expect yours! :grin::grin:
+
 ## Development
 
-This Component is still under development, if you have any suggestion, you could leave some in [**issue**](https://github.com/GeorgioWan/react-impressjs/issues) or [**fork this repo**](https://github.com/GeorgioWan/react-impressjs#fork-destination-box) :muscle::muscle:
+This Component is still under development, if you have any suggestion, you could tell me in [**issue**](https://github.com/GeorgioWan/react-impressjs/issues) or [**fork this repo**](https://github.com/GeorgioWan/react-impressjs#fork-destination-box) :muscle:
 
 ## License
 
