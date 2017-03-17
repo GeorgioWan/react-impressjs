@@ -3,11 +3,11 @@ var paths = require('./paths');
 
 var publicPath = '/';
 
-process.env.NODE_ENV = 'development';
-
 module.exports = {
   entry: {
-    index: paths.componentPath
+    //index: paths.componentPath
+    Impress: paths.impressPath,
+    Step: paths.stepPath
   },
   output: {
     path: paths.appDist,
@@ -60,6 +60,12 @@ module.exports = {
         test: /\.css$/,
         loader: 'style!css?importLoaders=1!postcss'
       },
+      // Scss
+      {
+        test: /\.s[ac]ss$/,
+        include: paths.appSrc,
+        loaders: ["style", "css", "sass"]
+      },
       {
         test: /\.json$/,
         loader: 'json'
@@ -70,12 +76,6 @@ module.exports = {
         query: {
           name: 'static/media/[name].[hash:8].[ext]'
         }
-      },
-      // Scss
-      {
-        test: /\.scss$/,
-        include: paths.appSrc,
-        loaders: ["style", "css", "sass"]
       }
     ]
   }
