@@ -77,7 +77,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "build-impress": "webpack --progress --colors --config ./config/webpack.config.impress.js",
+    "build-impress": "NODE_ENV='development' webpack --progress --colors --config ./config/webpack.config.impress.js",
     "prepublish": "rimraf lib && babel src/components --out-dir lib --source-maps --copy-files"
   },
   "jest": {
