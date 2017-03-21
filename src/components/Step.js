@@ -33,7 +33,7 @@ export default class Step extends Component {
     }
     componentWillReceiveProps( nextProps ){
         const { id, isPresented } = this.state;
-
+        
         if ( id === nextProps.activeStep.id && !isPresented ) 
             this.setState( update( this.state, {
                 isPresented: {
@@ -61,10 +61,21 @@ export default class Step extends Component {
     
     // Step's ID, ClassName, Style
     gtepID(){
-        const { id } = this.props;
+        const { id, idHelper } = this.props;
         
-        const move = new Date().getTime().toString();
-        return id || ("step-" + move);
+        return id || ("step-" + idHelper);
+    }
+    getClassName(){
+        const { activeStep } = this.props;
+        const { id, className, isPresented } = this.state;
+        
+        if ( id === activeStep.id )
+            return className + " active present";
+        else
+            if ( isPresented )
+                return className + " past";
+            else
+                return className + " future";
     }
     getData(){
         const { data } = this.props;
@@ -96,18 +107,7 @@ export default class Step extends Component {
         
         return _stepStyle;
     }
-    getClassName(){
-        const { activeStep } = this.props;
-        const { id, className, isPresented } = this.state;
-        
-        if ( id === activeStep.id )
-            return className + " active present";
-        else
-            if ( isPresented )
-                return className + " past";
-            else
-                return className + " future";
-    }
+    
     render() {
         const { children } = this.props;
         const { id } = this.state;

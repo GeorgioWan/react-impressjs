@@ -30,11 +30,14 @@ let windowScale = null,
 let _impressSupported,
     _lastHash = "",
     _stepsData = {},
-    _activeStep;
+    _activeStep,
+    _idHelper = 1;
 
 export default class Impress extends Component {
     constructor(props){
         super(props);
+        
+        const { fallbackMessage, hintOn, hintMessage } = props;
         
         // impress & canvas state
         this.state = {
@@ -46,7 +49,10 @@ export default class Impress extends Component {
                 x: 0, y: 0, z: 0,
                 rotateX: 0, rotateY: 0, rotateZ: 0,
                 scale: 1
-            }
+            },
+            fallbackMessage: fallbackMessage || <p>Your browser <b>doesn't support the features required</b> by React-impressJS, so you are presented with a simplified version of this presentation.</p>,
+            hintOn: hintOn !== undefined ? hintOn : true,
+            hintMessage: hintMessage || <p>Use a spacebar or arrow keys to navigate</p>
         };
     }
     componentWillMount(){
@@ -259,6 +265,7 @@ export default class Impress extends Component {
         
         return React.cloneElement( step, {
                     key: index,
+                    idHelper: step.props.id ? '' : _idHelper++,
                     activeStep: activeStep,
                     initStep: this.initStep.bind(this),
                     goto: this.goto.bind(this)
@@ -266,25 +273,20 @@ export default class Impress extends Component {
     }
     
     render() {
-        const { fallbackMessage } = this.props;
-        const { rootStyles, canvasStyles } = this.state;
+        const { rootStyles, canvasStyles, hintOn, hintMessage, fallbackMessage } = this.state;
         const steps = React.Children.map( this.props.children, this.stepComponent.bind(this) );
         
         return (
-            <div id="impress" style={ rootStyles }>
-                <div style={ canvasStyles }>
-                {
-                    _impressSupported ? steps :
-                    (
-                        <div className="fallback-message">
-                        {
-                            fallbackMessage ? fallbackMessage :
-                            <p>Your browser <b>doesn't support the features required</b> by React-impressJS, so you are presented with a simplified version of this presentation.</p>
-                        }
-                        </div>
-                    )
-                }
+            <div id="react-impressjs">
+                <div id="impress" style={ rootStyles }>
+                    <div style={ canvasStyles }>
+                    { 
+                        _impressSupported ? steps : 
+                        <div className="fallback-message">{ fallbackMessage }</div>
+                    }
+                    </div>
                 </div>
+                { hintOn ? <div className="hint">{ hintMessage }</div> : '' }
             </div>
         );
     }
