@@ -33,7 +33,7 @@ export default class Step extends Component {
     }
     componentWillReceiveProps( nextProps ){
         const { id, isPresented } = this.state;
-
+        
         if ( id === nextProps.activeStep.id && !isPresented ) 
             this.setState( update( this.state, {
                 isPresented: {
