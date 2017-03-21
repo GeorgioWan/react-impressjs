@@ -73,7 +73,7 @@ const defaults = {
 
 | name     | type    | description     | default      |
 |----------|----------------|----------|--------------|
-|id | String | id of dom node | "step-" + **timestamp** |
+|id | String | id of dom node | "step-" + ~**timestamp**~ **idHelper**(counter of Step) |
 |className | String | additional css class of step dom node | '' |
 |data | Object | setting Step's presentation | **defaultData** |
 |duration | number | define duration of the transition in ms  | 1000 |

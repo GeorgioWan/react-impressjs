@@ -30,7 +30,8 @@ let windowScale = null,
 let _impressSupported,
     _lastHash = "",
     _stepsData = {},
-    _activeStep;
+    _activeStep,
+    _idHelper = 1;
 
 export default class Impress extends Component {
     constructor(props){
@@ -259,6 +260,7 @@ export default class Impress extends Component {
         
         return React.cloneElement( step, {
                     key: index,
+                    idHelper: step.props.id ? '' : _idHelper++,
                     activeStep: activeStep,
                     initStep: this.initStep.bind(this),
                     goto: this.goto.bind(this)
