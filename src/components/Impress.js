@@ -107,6 +107,13 @@ export default class Impress extends Component {
                 this.goto( getElementFromHash( _stepsData ), 500 );
         }, 250), false );
     }
+    componentWillReceiveProps( nextPorps ){
+        this.setState({
+            fallbackMessage: nextPorps.fallbackMessage,
+            hintOn: nextPorps.hintOn,
+            hintMessage: nextPorps.hintMessage
+        });
+    }
     componentWillUnmount() {
         document.removeEventListener("keydown", function( event ) {
             console.log(event.keyCode);
@@ -125,7 +132,7 @@ export default class Impress extends Component {
             // because their CSS 3D support or hardware is not
             // good enough to run impress.js properly, sorry...
             ( ua.search( /(iphone)|(ipod)|(android)/ ) === -1 );
-      
+            
         if ( !_impressSupported ) {
             // We can't be sure that `classList` is supported
             body.className += " impress-not-supported ";
