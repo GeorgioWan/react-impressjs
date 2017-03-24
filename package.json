@@ -13,11 +13,12 @@
     "type": "git",
     "url": "https://github.com/georgiowan/react-impressjs"
   },
-  "homepage": "https://github.com/georgiowan/react-impressjs",
+  "homepage": "https://oawan.me/react-impressjs",
   "bugs": {
     "url": "https://github.com/georgiowan/react-impressjs/issues"
   },
   "dependencies": {
+    "rc-progress": "^2.1.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
   },
@@ -78,7 +79,8 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "build-impress": "NODE_ENV='development' webpack --progress --colors --config ./config/webpack.config.impress.js",
+    "ri-dev": "NODE_ENV='development' webpack --progress --colors --config ./config/webpack.config.impress.js",
+    "ri-build": "node scripts/build_impress.js",
     "prepublish": "rimraf lib && babel src/components --out-dir lib --source-maps --copy-files"
   },
   "jest": {

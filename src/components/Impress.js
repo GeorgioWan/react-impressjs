@@ -3,6 +3,8 @@ import update from 'react/lib/update';
 import { toNumber, computeWindowScale, css, pfx, perspective, 
          translate, rotate, scale, throttle, getElementFromHash } from './util';
 
+import  Progress  from './Progress';
+
 const body = document.body,
       ua = navigator.userAgent.toLowerCase();
       
@@ -37,12 +39,11 @@ export default class Impress extends Component {
     constructor(props){
         super(props);
         
-        const { fallbackMessage, hintOn, hintMessage } = props;
+        const { hintOn, hintMessage, fallbackMessage, progressOn } = props;
         
         // impress & canvas state
         this.state = {
             activeStep: {},
-            stepsData: {},
             rootStyles,
             canvasStyles: rootStyles,
             currentState: {
@@ -52,7 +53,8 @@ export default class Impress extends Component {
             },
             fallbackMessage: fallbackMessage || <p>Your browser <b>doesn't support the features required</b> by React-impressJS, so you are presented with a simplified version of this presentation.</p>,
             hintOn: hintOn !== undefined ? hintOn : true,
-            hintMessage: hintMessage || <p>Use a spacebar or arrow keys to navigate</p>
+            hintMessage: hintMessage || <p>Use a spacebar or arrow keys to navigate</p>,
+            progressOn: progressOn !== undefined ? progressOn : false
         };
     }
     componentWillMount(){
@@ -64,9 +66,6 @@ export default class Impress extends Component {
         this.setState( update( this.state, {
             activeStep: {
                 $set: _activeStep
-            },
-            stepsData: {
-                $set: _stepsData
             }
         }));
         
@@ -280,9 +279,10 @@ export default class Impress extends Component {
     }
     
     render() {
-        const { rootStyles, canvasStyles, hintOn, hintMessage, fallbackMessage } = this.state;
+        const { rootStyles, canvasStyles, activeStep, hintOn, hintMessage, fallbackMessage, progressOn } = this.state;
         const steps = React.Children.map( this.props.children, this.stepComponent.bind(this) );
-        
+        const stepsTota = React.Children.count(this.props.children) ;
+    
         return (
             <div id="react-impressjs">
                 <div id="impress" style={ rootStyles }>
@@ -294,6 +294,9 @@ export default class Impress extends Component {
                     </div>
                 </div>
                 { hintOn ? <div className="hint">{ hintMessage }</div> : '' }
+                { progressOn ? <Progress stepsData={ _stepsData } 
+                                         activeStep={ activeStep } 
+                                         stepsTotal={ stepsTota } /> : '' }
             </div>
         );
     }

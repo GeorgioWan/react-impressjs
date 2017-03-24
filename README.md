@@ -59,6 +59,7 @@ import { Impress, Step } from 'react-impressjs';
 |fallbackMessage | String or Element | fallback message is only visible when there is `impress-not-supported` | - |
 |hintOn | Boolean | display hint or not | **true** |
 |hintMessage | String or Element | hint for presentation | - |
+|progressOn | Boolean | progress of presentation | **false** |
 
 ```js
 const defaults = {
