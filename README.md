@@ -103,7 +103,7 @@ Currently, you can use impress.js's style in your app:
 import 'react-impressjs/styles/impress-demo.css';
 ```
 
-> If you have the better one, I'm glade you can share with us, expect yours! :grin::grin:
+> If you have the better one, I'm glad you can share with us, expect yours! :grin::grin:
 
 ## Development
 
