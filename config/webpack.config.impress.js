@@ -1,14 +1,17 @@
 var webpack = require('webpack');
 var paths = require('./paths');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 var publicPath = '/';
 
 module.exports = {
-  entry: {
+  entry: [
     //index: paths.componentPath
-    Impress: paths.impressPath,
-    Step: paths.stepPath
-  },
+    //Impress: paths.impressPath,
+    //Step: paths.stepPath
+    require.resolve('./polyfills'),
+    paths.appIndexJs,
+  ],
   output: {
     path: paths.appDist,
     pathinfo: true,
@@ -58,13 +61,13 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'style!css?importLoaders=1!postcss'
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
       },
       // Scss
       {
         test: /\.s[ac]ss$/,
         include: paths.appSrc,
-        loaders: ["style", "css", "sass"]
+        loader: ExtractTextPlugin.extract(['css', 'sass'])
       },
       {
         test: /\.json$/,
@@ -78,5 +81,8 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+    new ExtractTextPlugin("[name].css")
+  ]
 };
