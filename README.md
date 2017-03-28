@@ -95,10 +95,14 @@ const defaultData = {
 
 ## Style
 
-Currently, you can use impress.js's style in your app:
+Currently, you can use style of **impress.js** or **React-impressJS** in your app:
 
 ```js
+// style of impress
 import 'react-impressjs/styles/impress-demo.css';
+
+// style of react-impressjs
+import 'react-impressjs/styles/react-impressjs.css';
 ```
 
 > If you have the better one, I'm glade you can share with us, expect yours! :grin::grin:

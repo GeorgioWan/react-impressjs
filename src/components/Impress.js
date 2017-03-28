@@ -3,7 +3,7 @@ import update from 'react/lib/update';
 import { toNumber, computeWindowScale, css, pfx, perspective, 
          translate, rotate, scale, throttle, getElementFromHash } from './util';
 
-import  Progress  from './Progress';
+import Progress from './Progress';
 
 const body = document.body,
       ua = navigator.userAgent.toLowerCase();
@@ -53,7 +53,7 @@ export default class Impress extends Component {
             },
             fallbackMessage: fallbackMessage || <p>Your browser <b>doesn't support the features required</b> by React-impressJS, so you are presented with a simplified version of this presentation.</p>,
             hintOn: hintOn !== undefined ? hintOn : true,
-            hintMessage: hintMessage || <p>Use a spacebar or arrow keys to navigate</p>,
+            hintMessage: hintMessage || <p>Use <b>Spacebar</b> or <b>Arrow keys</b> to navigate</p>,
             progressOn: progressOn !== undefined ? progressOn : false
         };
     }
@@ -131,7 +131,7 @@ export default class Impress extends Component {
             // because their CSS 3D support or hardware is not
             // good enough to run impress.js properly, sorry...
             ( ua.search( /(iphone)|(ipod)|(android)/ ) === -1 );
-            
+        /*    
         if ( !_impressSupported ) {
             // We can't be sure that `classList` is supported
             body.className += " impress-not-supported ";
@@ -139,6 +139,7 @@ export default class Impress extends Component {
             body.classList.remove( "impress-not-supported" );
             body.classList.add( "impress-supported" );
         }
+        */
         // Config
         config = {
             width: toNumber( rootData.width, defaults.width ),
@@ -159,6 +160,7 @@ export default class Impress extends Component {
             overflow: "hidden"
         } );
         
+        
         this.setState( update( this.state, { 
             rootStyles: {
                 $merge: {
@@ -167,7 +169,7 @@ export default class Impress extends Component {
             }
         }));
         
-        body.classList.add( "impress-enabled" );
+        //body.classList.add( "impress-enabled" );
     }
     
     initStep( step ){
@@ -190,12 +192,12 @@ export default class Impress extends Component {
         let { activeStep, currentState } = this.state;
         
         window.scrollTo(0, 0);
-        
+        /*
         if( activeStep )
             body.classList.remove("impress-on-" + activeStep.id);
         
         body.classList.add("impress-on-" + step.id);
-        
+        */
         let target = {
             x: -step.data.x,
             y: -step.data.y,
@@ -284,7 +286,11 @@ export default class Impress extends Component {
         const stepsTota = React.Children.count(this.props.children) ;
     
         return (
-            <div id="react-impressjs">
+            <div id="react-impressjs" 
+                 className={ 
+                    (_impressSupported ? 'impress-supported' : 'impress-not-supported') + 
+                    (activeStep ? ' impress-on-' + activeStep.id : '') + ' impress-enabled' }>
+                 
                 <div id="impress" style={ rootStyles }>
                     <div style={ canvasStyles }>
                     { 
