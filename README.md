@@ -3,6 +3,7 @@
 impress.js via React :tada:
 
 [![NPM version][npm-image]][npm-url]
+[![NPM download][npm-download-image]][npm-download-url]
 [![Build Status][travis-image]][travis-url]
 [![LICENCE][licence-image]][licence-url]
 
@@ -12,6 +13,8 @@ impress.js via React :tada:
 [travis-url]: https://travis-ci.org/GeorgioWan/react-impressjs
 [licence-image]: https://img.shields.io/npm/l/react-impressjs.svg
 [licence-url]: https://github.com/GeorgioWan/react-impressjs/blob/master/LICENSE
+[npm-download-image]: https://img.shields.io/npm/dm/react-impressjs.svg
+[npm-download-url]: https://www.npmjs.com/package/react-impressjs
 
 ## Install
 
@@ -105,7 +108,7 @@ import 'react-impressjs/styles/impress-demo.css';
 import 'react-impressjs/styles/react-impressjs.css';
 ```
 
-> If you have the better one, I'm glade you can share with us, expect yours! :grin::grin:
+> If you have the better one, I'm glad you can share with us, expect yours! :grin::grin:
 
 ## Development
 
