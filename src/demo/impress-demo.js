@@ -154,7 +154,7 @@ export default [
           scale:10
       },
       content:[
-          <p>This demo of impress.js is made via <a href="https://github.com/GeorgioWan/react-impressjs" target="_blank"><b>React-impressJS</b></a></p>
+          <p>This demo of impress.js is made via <a href="https://github.com/GeorgioWan/react-impressjs" target="_blank">React-impressJS</a></p>
       ]
   }
 ];
