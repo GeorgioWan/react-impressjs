@@ -75,21 +75,26 @@ export default class Impress extends Component {
         
         document.addEventListener( "keyup", throttle((e) => {
             if ( e.keyCode === 9 ||
-               ( e.keyCode >= 32 && e.keyCode <= 34 ) ||
-               ( e.keyCode >= 37 && e.keyCode <= 40 ) ) {
+               ( e.keyCode >= 32 && e.keyCode <= 40 ) ) {
                 switch ( e.keyCode ) {
+                    case 35: // End
+                            this.end();
+                            break;
+                    case 36: // Home
+                            this.home();
+                            break;
                     case 33: // Page up
                     case 37: // Left
                     case 38: // Up
-                             this.prev();
-                             break;
+                            this.prev();
+                            break;
                     case 9:  // Tab
                     case 32: // Space
                     case 34: // Page down
                     case 39: // Right
                     case 40: // Down
-                             this.next();
-                             break;
+                            this.next();
+                            break;
                     default:
                         break;
                 }
@@ -267,6 +272,18 @@ export default class Impress extends Component {
             
         this.goto( next, next.duration );
     }
+    home(){
+        const stepsDataEntries = Object.entries( _stepsData );
+        const firstStep = stepsDataEntries[ 0 ][1];
+        
+        this.goto( firstStep, firstStep.duration );
+    }
+    end(){
+        const stepsDataEntries = Object.entries( _stepsData );
+        const lastStep = stepsDataEntries[ stepsDataEntries.length - 1 ][1];
+        
+        this.goto( lastStep, lastStep.duration );
+    }
     
     stepComponent( step, index ){
         const { activeStep } = this.state;
@@ -289,7 +306,7 @@ export default class Impress extends Component {
         } = this.state;
         const steps = React.Children.map( this.props.children, this.stepComponent.bind(this) );
         const stepsTotal = React.Children.count(this.props.children) ;
-    
+        
         return (
             <div id="react-impressjs" 
                  className={ 

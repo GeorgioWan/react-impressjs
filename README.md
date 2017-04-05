@@ -25,9 +25,26 @@ impress.js via React :tada:
 ### Components
 
 **React-impressJS** have two components: **`<Impress />`** and **`<Step />`**, as same as [**impress.js**](https://github.com/impress/impress.js/).
+
 **`<Impress />`** contains the **root of impress** and the **camera**, then put **`<Step />`** inside impress component, magic happens :sparkles:
 
-> What's **impress.js**!? It's an awesome presentation framework power of CSS3 transorms and transitions, please check [THIS](https://github.com/impress/impress.js) first!!
+> What's **impress.js**!? 
+>
+> It's an awesome presentation framework power of CSS3 transorms and transitions, please check [THIS](https://github.com/impress/impress.js) first!!
+
+### Quick Navigation
+
+You can use **Spacebar** or **Arrow keys** to navigate, and here's all the keys for navigation:
+
+`←` or `↑` or `PageUp`: Go to the previous Step.
+
+`→` or `↓` or `Space` or `PageDown`: Go to the next Step.
+
+`Home`: Go to the first Step.
+
+`End`: Go to the last Step.
+
+> p.s. You can also **Click** the Step directly.
 
 ### Basic Use
 
