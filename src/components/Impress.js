@@ -281,9 +281,14 @@ export default class Impress extends Component {
     }
     
     render() {
-        const { rootStyles, canvasStyles, activeStep, hintOn, hintMessage, fallbackMessage, progressOn } = this.state;
+        const { 
+            rootStyles, canvasStyles, activeStep, 
+            hintOn, hintMessage, 
+            fallbackMessage, 
+            progressOn
+        } = this.state;
         const steps = React.Children.map( this.props.children, this.stepComponent.bind(this) );
-        const stepsTota = React.Children.count(this.props.children) ;
+        const stepsTotal = React.Children.count(this.props.children) ;
     
         return (
             <div id="react-impressjs" 
@@ -302,7 +307,7 @@ export default class Impress extends Component {
                 { hintOn ? <div className="hint">{ hintMessage }</div> : '' }
                 { progressOn ? <Progress stepsData={ _stepsData } 
                                          activeStep={ activeStep } 
-                                         stepsTotal={ stepsTota } /> : '' }
+                                         stepsTotal={ stepsTotal } /> : '' }
             </div>
         );
     }
