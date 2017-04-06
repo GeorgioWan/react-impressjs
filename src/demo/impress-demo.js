@@ -101,7 +101,7 @@ export default [
           scale:6
       },
       content:[
-          <p>the only <b>limit</b> is your <b className="imagination">imagination</b></p>
+          <p>the only <b>limit</b> is your <b className="imagination scaling-up">imagination</b></p>
       ]
   },
   {

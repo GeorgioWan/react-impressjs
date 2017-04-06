@@ -3,8 +3,8 @@
 /************/
 /*** Font ***/
 /************/
-@import url(https://fonts.googleapis.com/css?family=Oxygen);
-$_font-family: 'Oxygen', georgia, '微軟正黑體', 'sans-serif';
+@import url(https://fonts.googleapis.com/css?family=Roboto:300,700);
+$_font-family: 'Roboto', 'San Francisco', '微軟正黑體', 'sans-serif';
 $_font-size: 48px;
 
 /*************/
@@ -16,6 +16,13 @@ $_sub-color : #e5b560;
 /*************/
 /*** mixin ***/
 /*************/
+@mixin transition($props, $second){
+  -webkit-transition: $props $second;
+     -moz-transition: $props $second;
+      -ms-transition: $props $second;
+       -o-transition: $props $second;
+          transition: $props $second;
+}
 @mixin transform($transform, $delay) {
   -webkit-transform: $transform;
      -moz-transform: $transform;
@@ -127,11 +134,7 @@ sup {top: -.5em;}
     margin: 0;
     opacity: 0.3;
 
-    -webkit-transition: opacity 1s;
-    -moz-transition:    opacity 1s;
-    -ms-transition:     opacity 1s;
-    -o-transition:      opacity 1s;
-    transition:         opacity 1s;
+    @include transition(opacity, 1s);
     
     &.active{ 
       opacity: 1; 
@@ -141,39 +144,42 @@ sup {top: -.5em;}
     a {
       color: rgba(255,255,255,0.8);
       text-decoration: none;
-      padding: 0 0.3em;
+      padding: 0 0.4em;
       background: $_main-color;
       border-radius: 0.2em;
     
-      -webkit-transition: 0.5s;
-      -moz-transition:    0.5s;
-      -ms-transition:     0.5s;
-      -o-transition:      0.5s;
-      transition:         0.5s;
+      @include transition(all, .5s);
+      
       &:hover, &:focus {
         color: $_sub-color;
-        background: #54626f;
+        background: lighten($_main-color, 5);
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         text-decoration:none;
       }
     }
     b {
       display: inline-block;
-      -webkit-transition: .5s;
-      -moz-transition:    .5s;
-      -ms-transition:     .5s;
-      -o-transition:      .5s;
-      transition:         .5s;
+      
+      @include transition(all, .5s);
     }
     &.present {
       .positioning {
         @include transform(translateY(-10px), 1.25s);
       }
+      .positioning-down {
+        @include transform(translateY(10px), 1.25s);
+      }
       .rotating{
         @include transform(rotate(-10deg), 1.5s);
       }
+      .rotating-right{
+        @include transform(rotate(10deg), 1.5s);
+      }
       .scaling{
         @include transform(scale(.7), 1.75s);
+      }
+      .scaling-up{
+        @include transform(scale(1.3), 1.75s);
       }
     }
   }
@@ -185,7 +191,6 @@ sup {top: -.5em;}
 .slide {
   display: block;
 
-  //line-height: 1.4;
   line-height: 36px;
   width: 900px;
   height: 700px;
@@ -193,8 +198,8 @@ sup {top: -.5em;}
 
   background-color: white;
   border: 1px solid rgba(0, 0, 0, .3);
-  border-radius: 10px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 3px;
+  box-shadow: 0 8px 16px rgba(0,20,80,.04), 0 4px 16px rgba(0,0,0,.08);
 
   color: rgb(102, 102, 102);
   text-shadow: 0 2px 2px rgba(0, 0, 0, .1);
@@ -209,6 +214,10 @@ sup {top: -.5em;}
   h4, .h4{ font-size: ($_font-size * 1.3); }
   h5, .h5{ font-size: ($_font-size * 1); }
   h6, .h6{ font-size: ($_font-size * 0.85); }
+  
+  &:hover{
+    box-shadow: 0 8px 16px rgba(0,40,80,.08), 0 8px 24px 5px rgba(0,0,0,.08);
+  }
 }
 
 /*
@@ -239,7 +248,7 @@ sup {top: -.5em;}
   bottom: 14%;
   z-index: 9999;
 
-  border-radius: 5px;
+  border-radius: 3px;
   filter: drop-shadow(0 8px 8px rgba(0,0,0,.3));
   b {
     color: $_sub-color;
