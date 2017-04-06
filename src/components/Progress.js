@@ -10,20 +10,20 @@ export default class Progress extends Component {
         let progress = parseInt(currentStepIndex/stepsTotal * 100, 10);
         
         return (
-            <aside style={{position:'absolute', bottom:0, width:'100%', height:3}}>
+            <div style={{position:'absolute', bottom:9, width:'100%', height:3}}>
                 <div style={{position: 'relative'}}>
                     <Line percent={progress} 
                           strokeLinecap='square'
-                          strokeWidth={1} strokeColor={ color_gold }
-                          trailWidth={1} trailColor={ color_gray } />
-                    <p style={{position:'absolute', bottom:27, fontSize:20, color: color_gray, width:'100%', textAlign:'center', opacity: .4}}>
+                          strokeWidth={.2} strokeColor={ color_gold }
+                          trailWidth={.2} trailColor={ color_gray } />
+                    <p style={{position:'absolute', bottom:14, fontSize:20, color: color_gray, width:'100%', textAlign:'center', opacity: .5}}>
                         <span>
                             { currentStepIndex }
                             <span style={{paddingLeft:1, fontSize:13}}>{'/' + stepsTotal}</span>
                         </span>
                     </p>
                 </div>
-            </aside>
+            </div>
         );
     }
 }
