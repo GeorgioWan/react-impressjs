@@ -5,8 +5,8 @@ import { toNumber, computeWindowScale, css, pfx, perspective,
 
 import Progress from './Progress';
 
-const body = document.body,
-      ua = navigator.userAgent.toLowerCase();
+const html = document.documentElement,
+      body = document.body;
     
 let _lastHash = "",
     _stepsData = {},
@@ -34,7 +34,7 @@ export default class Impress extends Component {
             transition: "all 0s ease-in-out",
             transformStyle: "preserve-3d"
         };
-        const currentState = {
+        const defaultData = {
             x: 0, y: 0, z: 0,
             rotateX: 0, rotateY: 0, rotateZ: 0,
             scale: 1
@@ -44,25 +44,28 @@ export default class Impress extends Component {
         this.state = {
             /** Impress Config **/
             rootStyles,
-            canvasStyles: rootStyles,
-            currentState: currentState,
             windowScale: null,
             config: null,
             impressSupported: false,
             
             /** Step Status **/
-            activeStep: {},
+            activeStep: {
+                data: defaultData
+            },
             
-            /**
-             * Public attributes provide to use.
-             * 
-             * @params: hint, hintMessage, fallbaceMessage, progress, rootData
-             */
+            /** Camera Status **/
+            cameraStyles: rootStyles,
+            
+            /** Public attributes provide to use **/
             rootData: rootData, // (not recommended)
             hint: hint,
             hintMessage: hintMessage,
             fallbackMessage: fallbackMessage,
-            progress: progress
+            progress: progress,
+            
+            /** For touch event **/
+            startX: 0,
+            deltaX: 0
         };
     }
     componentWillMount(){
@@ -72,16 +75,11 @@ export default class Impress extends Component {
     componentDidMount(){
         const { impressSupported } = this.state;
         
-        this.setState( update( this.state, {
-            activeStep: {
-                $set: _activeStep
-            }
-        }));
-        
         // 2017/2/28 暫時想不到好方法
         if ( impressSupported )
             this.goto( _activeStep, 500 );
         
+        // Listener for keyboard event
         document.addEventListener( "keyup", throttle((e) => {
             if ( e.keyCode === 9 ||
                ( e.keyCode >= 32 && e.keyCode <= 40 ) ) {
@@ -110,11 +108,13 @@ export default class Impress extends Component {
             }
         }, 250), false );
         
+        // Window resize
         window.addEventListener( "resize", throttle(() => {
             if ( impressSupported )
                 this.goto( this.state.activeStep, 500 );
         }, 250), false );
         
+        // URL hash change
         window.addEventListener( "hashchange", throttle(() => {
             if ( window.location.hash !== _lastHash )
                 this.goto( getElementFromHash( _stepsData ), 500 );
@@ -133,6 +133,9 @@ export default class Impress extends Component {
         }, false);
     }
     
+    /**
+     * Initialize Impress.
+     */
     init(){
         const { rootData } = this.state;
         let { windowScale, config, impressSupported } = this.state;
@@ -145,6 +148,8 @@ export default class Impress extends Component {
             perspective: 1000,
             transitionDuration: 1000
         };
+        
+        // const ua = navigator.userAgent.toLowerCase()
         
         // Check impress support or not.
         impressSupported =
@@ -172,8 +177,10 @@ export default class Impress extends Component {
         // Window Scale
         windowScale = computeWindowScale( config );
         // HTML height
-        document.documentElement.style.height = "100vh";
-        document.documentElement.style.overflow = "hidden";
+        css( html, {
+            height: "100vh",
+            overflow: "hidden"
+        });
         // Body style
         css( body, {
             height: "100vh",
@@ -202,7 +209,13 @@ export default class Impress extends Component {
         }));
     }
     
+    /**
+     * Initialize Steps.
+     * 
+     * @param {Step} init every Steps in Impress.
+     */
     initStep( step ){
+        // Set first Step as enter Step.
         if ( !_activeStep )
             _activeStep = step;
             
@@ -225,7 +238,7 @@ export default class Impress extends Component {
      * @param {number} 1000 speed of navigation.
      */
     goto( step, duration = 1000 ) {
-        const { config, activeStep, currentState } = this.state;
+        const { config, activeStep } = this.state;
         let { windowScale } = this.state;
         
         window.scrollTo(0, 0);
@@ -240,7 +253,8 @@ export default class Impress extends Component {
             scale: 1 / step.data.scale
         };
         
-        let zoomin = target.scale >= currentState.scale;
+        // Check scale for zoom-in
+        let zoomin = target.scale >= ( 1 / activeStep.data.scale );
         
         duration = toNumber( duration, config.transitionDuration );
         let delay = ( duration / 2 );
@@ -254,9 +268,6 @@ export default class Impress extends Component {
             activeStep: {
                 $set: step
             },
-            currentState: {
-                $set: target
-            },
             rootStyles: {
                 transform: {
                     $set: perspective( config.perspective / targetScale ) + scale( targetScale ),
@@ -268,7 +279,7 @@ export default class Impress extends Component {
                     $set: ( zoomin ? delay : 0 ) + "ms" 
                 }
             },
-            canvasStyles: {
+            cameraStyles: {
                 transform: {
                     $set: rotate( target, true ) + translate( target ),
                 },
@@ -287,19 +298,37 @@ export default class Impress extends Component {
     // Navigate to the PREVIOUS Step.
     prev(){
         const { activeStep } = this.state;
-        const stepsDataEntries = Object.entries( _stepsData );
-        let prev = stepsDataEntries.findIndex( ([k, v]) => { return k === activeStep.id } ) - 1;
-        prev = prev >= 0 ? stepsDataEntries[ prev ][1] : stepsDataEntries[ stepsDataEntries.length - 1 ][1];
-            
+        
+        /** 
+         * 2017.04.10
+         * Why we don't use Object.entries() or Object.values() any more ?
+         * Cause the browser of iOS devise (Chrome, Safari...) and some of Android devise
+         * DOES'NT supported Object.entries() and Object.values() now...
+         */
+        // const stepsDataEntries = Object.entries( _stepsData );
+        // let prev = stepsDataEntries.findIndex( ([k, v]) => { return k === activeStep.id } ) - 1;
+        // prev = prev >= 0 ? stepsDataEntries[ prev ][1] : stepsDataEntries[ stepsDataEntries.length - 1 ][1];
+        
+        const stepsDataKeys = Object.keys( _stepsData );
+        // get index of previous
+        let prev = stepsDataKeys.findIndex( k => k === activeStep.id ) -1;
+        
+        // get id via index from stepsData
+        prev = prev >= 0 ? stepsDataKeys[ prev ] : stepsDataKeys[ stepsDataKeys.length - 1 ];
+        
+        // get previous step
+        prev = _stepsData[ prev ];
+
         this.goto( prev, prev.duration );
     }
     
     // Navigate to the NEXT Step.
     next(){
         const { activeStep } = this.state;
-        const stepsDataEntries = Object.entries( _stepsData );
-        let next = stepsDataEntries.findIndex( ([k, v]) => { return k === activeStep.id } ) + 1;
-        next = next < stepsDataEntries.length ? stepsDataEntries[ next ][1] : stepsDataEntries[ 0 ][1];
+        const stepsDataKeys = Object.keys( _stepsData );
+        let next = stepsDataKeys.findIndex( k => k === activeStep.id ) + 1;
+        next = next < stepsDataKeys.length ? stepsDataKeys[ next ] : stepsDataKeys[ 0 ];
+        next = _stepsData[ next ];
             
         this.goto( next, next.duration );
     }
@@ -318,6 +347,33 @@ export default class Impress extends Component {
         const lastStep = stepsDataEntries[ stepsDataEntries.length - 1 ][1];
         
         this.goto( lastStep, lastStep.duration );
+    }
+    
+    // Touch Start( record start position: startX )
+    handleTouchStart(e){
+        this.setState({
+            startX: e.touches[0].clientX
+        });
+    }
+    
+    // Touch Move( Calculate touch move path: deltaX )
+    handleTouchMove(e){
+        this.setState({
+            deltaX: this.state.startX - e.touches[0].clientX
+        });
+    }
+    
+    // Touch End( decide navigate previous or next Step via 'deltaX' )
+    handleTouchEnd(e){
+        if ( this.state.deltaX > 0 ) // slide left
+            this.next();
+        else if ( this.state.deltaX < 0 ) // slide right
+            this.prev();
+
+        // reset
+        this.setState({
+            deltaX: 0
+        });
     }
     
     /**
@@ -340,7 +396,7 @@ export default class Impress extends Component {
     render() {
         const { 
             impressSupported,
-            rootStyles, canvasStyles, activeStep, 
+            rootStyles, cameraStyles, activeStep, 
             hint, hintMessage, 
             fallbackMessage, 
             progress
@@ -352,10 +408,14 @@ export default class Impress extends Component {
             <div id="react-impressjs" 
                  className={ 
                     (impressSupported ? 'impress-supported' : 'impress-not-supported') + 
-                    (activeStep ? ' impress-on-' + activeStep.id : '') + ' impress-enabled' }>
+                    (activeStep ? ' impress-on-' + activeStep.id : '') + ' impress-enabled' 
+                 }
+                 onTouchStart={ this.handleTouchStart.bind(this) }
+                 onTouchMove={ this.handleTouchMove.bind(this) }
+                 onTouchEnd={ this.handleTouchEnd.bind(this) }>
                  
                 <div id="impress" style={ rootStyles }>
-                    <div style={ canvasStyles }>
+                    <div style={ cameraStyles }>
                     { 
                         impressSupported ? steps : 
                         <div className="fallback-message">{ fallbackMessage }</div>
