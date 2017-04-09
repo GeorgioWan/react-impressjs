@@ -9,7 +9,7 @@ import demo from './demo/impress-demo';
 class App extends Component {
   render() {
     return (
-      <Impress progressOn={true}>
+      <Impress progress={true}>
       {
         demo.map( (d, index ) => {
           return (
