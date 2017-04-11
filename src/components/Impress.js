@@ -358,6 +358,7 @@ export default class Impress extends Component {
     
     // Touch Move( Calculate touch move path: deltaX )
     handleTouchMove(e){
+        e.preventDefault();
         this.setState({
             deltaX: this.state.startX - e.touches[0].clientX
         });
