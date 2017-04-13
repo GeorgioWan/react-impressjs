@@ -238,9 +238,9 @@ sup {top: -.5em;}
   background-color: $_main-color;
   font-size: 20px;
   text-align: center;
-
+  
   width: 400px;
-  height: 100px;
+  min-height: 100px;
   line-height: 100px;
 
   position: fixed;
@@ -250,14 +250,42 @@ sup {top: -.5em;}
 
   border-radius: 3px;
   filter: drop-shadow(0 8px 8px rgba(0,0,0,.3));
+  
   b {
     color: $_sub-color;
   }
 }
-.impress-on-bored .hint {
-  animation: fadeInDown .6s ease 1s forwards;
+.mobile-hint {
+  opacity: 0;
+  animation: fadeOutUp .6s ease forwards;
+  
+  text-align: center;
+  color: $_main-color;
+  
+  width: 128px;
+  
+  position: fixed;
+  left: calc(50% - 64px);
+  bottom: 10%;
+  
+  img {
+    display:block;
+    margin: 0 auto;
+    width: 48px;
+  }
+  span {
+    display: block;
+    margin-top: 5px;
+  }
 }
-.impress-enabled .hint { display: block }
+.show {
+  .hint, .mobile-hint {
+    animation: fadeInDown .6s ease 1s forwards;
+  }
+}
+.impress-enabled { 
+  .hint, .mobile-hint { display: block }
+}
 /*
   animation
 */

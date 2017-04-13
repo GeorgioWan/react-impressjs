@@ -4,6 +4,7 @@ import { toNumber, computeWindowScale, css, pfx, perspective,
          translate, rotate, scale, throttle, getElementFromHash } from './util';
 
 import Progress from './Progress';
+import Hint from './Hint';
 
 const html = document.documentElement,
       body = document.body;
@@ -423,10 +424,16 @@ export default class Impress extends Component {
                     }
                     </div>
                 </div>
-                { hint ? <div className="hint">{ hintMessage }</div> : '' }
-                { progress ? <Progress stepsData={ _stepsData } 
-                                       activeStep={ activeStep } 
-                                       stepsTotal={ stepsTotal } /> : '' }
+                <Hint 
+                    hint={ hint }
+                    stepsData={ _stepsData }
+                    activeStep={ activeStep }
+                    hintMessage={hintMessage} />
+                <Progress
+                    progress={ progress }
+                    stepsData={ _stepsData } 
+                    activeStep={ activeStep } 
+                    stepsTotal={ stepsTotal } />
             </div>
         );
     }
