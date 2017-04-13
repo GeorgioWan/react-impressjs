@@ -16,23 +16,27 @@ impress.js via React :tada:
 [npm-download-image]: https://img.shields.io/npm/dm/react-impressjs.svg
 [npm-download-url]: https://www.npmjs.com/package/react-impressjs
 
+## Why React-impressJS
+
+Easy to create an impressive **Slide**/**Introduction**/**Presentation** in ReactJS.
+
 ## Install
 
 [![NPM install](https://nodei.co/npm/react-impressjs.png)](https://www.npmjs.com/package/react-impressjs)
 
-## Usage
-
-### Components
-
-**React-impressJS** have two components: **`<Impress />`** and **`<Step />`**, as same as [**impress.js**](https://github.com/impress/impress.js/).
-
-**`<Impress />`** contains the **root of impress** and the **camera**, then put **`<Step />`** inside impress component, magic happens :sparkles:
-
-> What's **impress.js**!? 
->
-> It's an awesome presentation framework power of CSS3 transorms and transitions, please check [THIS](https://github.com/impress/impress.js) first!!
+## Feature
 
 ### Quick Navigation
+
+#### Navigation on Mobile devise (YES! We provide mobile browser now :tada:)
+
+Just **Swipe** to navigate:
+
+`swipe right`: Go to the previous Step.
+
+`swipe left`: Go to the next Step.
+
+#### Navigation on PC/Laptop
 
 You can use **Spacebar** or **Arrow keys** to navigate, and here's all the keys for navigation:
 
@@ -46,28 +50,25 @@ You can use **Spacebar** or **Arrow keys** to navigate, and here's all the keys 
 
 > p.s. You can also **Click** the Step directly.
 
-### Basic Use
+### Progress (Step Counter)
 
-```jsx
-import { Impress, Step } from 'react-impressjs';
+Provide **progress bar** and **Slide Counter** (current/total number), let presentation more clearly.
 
-<Impress fallbackMessage={<p>Sorry, your <b>device or browser</b> couldn't support well.</p>}>
-    <Step id={'overview'} /> 
-    <Step id={'any_id'} className={'class_name'} />
-    <Step className={'without_id_is_ok'} 
-          data={
-            {
-                x:100,
-                y:-100,
-                scale:2
-            }}/>
-    <Step duration={1500}>
-        <h1>Any Element write in Step!</h1>
-        <hr />
-        <p>Made by your <b>Creativity</b> !!</p>
-    </Step>
-</Impress>
-```
+### Hash Permalinks
+
+You can navigate to the Step you want with `#/step-id`.
+
+## Usage
+
+### Components
+
+**React-impressJS** have two components: **`<Impress />`** and **`<Step />`**, as same as [**impress.js**](https://github.com/impress/impress.js/).
+
+**`<Impress />`** contains the **root of impress** and the **camera**, then put **`<Step />`** inside impress component, magic happens :sparkles:
+
+> What's **impress.js**!? 
+>
+> It's an awesome presentation framework power of CSS3 transorms and transitions, please check [THIS](https://github.com/impress/impress.js) first!!
 
 ## API
 
@@ -77,9 +78,9 @@ import { Impress, Step } from 'react-impressjs';
 |----------|----------------|----------|--------------|
 |rootData | Object | setting impress basic config | **defaults** |
 |fallbackMessage | String or Element | fallback message is only visible when there is `impress-not-supported` | - |
-|hintOn | Boolean | display hint or not | **true** |
+|hint | Boolean | display hint or not | **true** |
 |hintMessage | String or Element | hint for presentation | - |
-|progressOn | Boolean | progress of presentation | **false** |
+|progress | Boolean | progress of presentation | **false** |
 
 ```js
 const defaults = {
@@ -113,6 +114,34 @@ const defaultData = {
 };
 ```
 
+### Basic Use
+
+```jsx
+import { Impress, Step } from 'react-impressjs';
+// styles of react-impressjs
+import 'react-impressjs/styles/react-impressjs.css';
+
+<Impress 
+    progress={true}
+    fallbackMessage={<p>Sorry, your <b>device or browser</b> couldn't support well.</p>}
+    >
+    <Step id={'overview'} /> 
+    <Step id={'any_id'} className={'class_name'} />
+    <Step className={'without_id_is_ok'} 
+          data={
+            {
+                x:100,
+                y:-100,
+                scale:2
+            }}/>
+    <Step duration={1500}>
+        <h1>Any Element write in Step!</h1>
+        <hr />
+        <p>Made by your <b>Creativity</b> !!</p>
+    </Step>
+</Impress>
+```
+
 ## Style
 
 Currently, you can use style of **impress.js** or **React-impressJS** in your app:
@@ -125,6 +154,8 @@ import 'react-impressjs/styles/impress-demo.css';
 import 'react-impressjs/styles/react-impressjs.css';
 ```
 
+> We suggest you use the **React-impressJS**.
+>
 > If you have the better one, I'm glad you can share with us, expect yours! :grin::grin:
 
 ## Development
