@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import update from 'react/lib/update';
+import PropTypes from 'prop-types';
 import { toNumber, computeWindowScale, css, pfx, perspective, 
          translate, rotate, scale, throttle, getElementFromHash } from './util';
 
@@ -15,18 +16,10 @@ let _lastHash = "",
     _idHelper = 1;
 
 export default class Impress extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        
-        // Setting defaults with props attributes.
-        const {
-            rootData        = {},
-            hint            = true, 
-            hintMessage     = <p>Use <b>Spacebar</b> or <b>Arrow keys</b> to navigate</p>, 
-            fallbackMessage = <p>Your browser <b>doesn't support the features required</b> by React-impressJS, so you are presented with a simplified version of this presentation.</p>, 
-            progress        = false
-        } = props;
-        
+
+        const {rootData, hint, hintMessage, fallbackMessage, progress} = props;
         const rootStyles = {
             position: "absolute",
             top: "50%",
@@ -213,7 +206,7 @@ export default class Impress extends Component {
     /**
      * Initialize Steps.
      * 
-     * @param {Step} init every Steps in Impress.
+     * @param {Step} step init every Steps in Impress.
      */
     initStep( step ){
         // Set first Step as enter Step.
@@ -236,7 +229,7 @@ export default class Impress extends Component {
      * Navigate to the SPECIFY Step.
      * 
      * @param {Step} step you want to navigate to.
-     * @param {number} 1000 speed of navigation.
+     * @param {number} duration 1000 speed of navigation.
      */
     goto( step, duration = 1000 ) {
         const { config, activeStep } = this.state;
@@ -438,3 +431,39 @@ export default class Impress extends Component {
         );
     }
 }
+
+Impress.propTypes = {
+  /**
+   * Impress basic config
+   */
+  rootData: PropTypes.object,
+
+  /**
+   * Whether to display hint or not
+   */
+  hint: PropTypes.bool,
+
+  /**
+   * Hint for presentation
+   */
+  hintMessage: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+
+  /**
+   * Fallback message is only visible when there is impress-not-supported
+   */
+  fallbackMessage: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+
+  /**
+   * Progress of presentation
+   */
+  progress: PropTypes.bool,
+};
+
+Impress.defaultProps = {
+  rootData: {},
+  hint: true,
+  hintMessage: <p>Use <b>Spacebar</b> or <b>Arrow keys</b> to navigate</p>,
+  fallbackMessage: <p>Your browser <b>doesn't support the features required</b> by React-impressJS, so you are presented
+    with a simplified version of this presentation.</p>,
+  progress: false,
+};

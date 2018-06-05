@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Line } from 'rc-progress';
+import PropTypes from 'prop-types';
 
 export default class Progress extends Component {
     render() {
@@ -27,3 +28,27 @@ export default class Progress extends Component {
         );
     }
 }
+
+Progress.propTypes = {
+  /**
+   * Progress of presentation
+   */
+  progress: PropTypes.bool,
+
+  /**
+   * Steps data
+   */
+  stepsData: PropTypes.object,
+
+  /**
+   * Object representing current step
+   */
+  activeStep: PropTypes.shape({
+    id: PropTypes.string,
+  }),
+
+  /**
+   * Amount of steps
+   */
+  stepsTotal: PropTypes.number,
+};
